@@ -1,6 +1,6 @@
 node {
   def project = 'neargrocery'
-  def appName = 'usuario-service-cmd'
+  def appName = 'store-service-cmd'
   def feSvcName = "${appName}-backend"
   def imageTag = "192.168.99.100:5000/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
 
@@ -21,7 +21,7 @@ node {
     // Roll out to canary environment
     case "canary":
         // Change deployed image in canary to the one we just built
-        sh("sed -i.bak 's#192.168.99.100:5000/usuario-service:v1.4#${imageTag}#' ./yamls/canary/*.yaml")
+        sh("sed -i.bak 's#192.168.99.100:5000/store-service-cmd:v1.4#${imageTag}#' ./yamls/canary/*.yaml")
         //sh("kubectl --namespace=production apply -f yamls/services/")
         sh("kubectl --namespace=production apply -f yamls/canary/")
         sh("echo http://`kubectl --namespace=production get service/${feSvcName} --output=json | jq -r '.status.loadBalancer.ingress[0].ip'` > ${feSvcName}")
@@ -30,7 +30,7 @@ node {
     // Roll out to production
     case "master":
         // Change deployed image in canary to the one we just built
-        sh("sed -i.bak 's#192.168.99.100:5000/usuario-service:v1.4#${imageTag}#' ./yamls/production/*.yaml")
+        sh("sed -i.bak 's#192.168.99.100:5000/store-service-cmd:v1.4#${imageTag}#' ./yamls/production/*.yaml")
         //sh("kubectl --namespace=production apply -f yamls/services/")
         sh("kubectl --namespace=production apply -f yamls/production/")
         sh("echo http://`kubectl --namespace=production get service/${feSvcName} --output=json | jq -r '.status.loadBalancer.ingress[0].ip'` > ${feSvcName}")
@@ -44,7 +44,7 @@ node {
         //sh("sed -i.bak 's#LoadBalancer#ClusterIP#' ./k8s/services/frontend.yaml")
                
 
-        sh("sed -i.bak 's#192.168.99.100:5000/Usuario-Service-Cmd#${imageTag}#' ./helm/usuario-service-cmd/values.yaml")
+        sh("sed -i.bak 's#192.168.99.100:5000/store-service-cmd#${imageTag}#' ./helm/usuario-service-cmd/values.yaml")
         //sh("kubectl --namespace=${env.BRANCH_NAME} apply -f yamls/services/")
     //withKubeConfig([credentialsId: 'jenkins-deployer', serverUrl: 'https://192.168.99.100:6443']) {
      //sh("kubectl version")
@@ -56,7 +56,7 @@ node {
            //         enableConfigSubstitution: true
              //   )
     sh ("pwd")
-      sh("/usr/local/bin/helm upgrade --install usuario-service-cmd ./helm/usuario-service-cmd --kubeconfig /var/lib/jenkins/workspace/config")
+      sh("/usr/local/bin/helm upgrade --install store-service-cmd ./helm/store-service-cmd --kubeconfig /var/lib/jenkins/workspace/config")
     
       
     //kubernetesDeploy(
