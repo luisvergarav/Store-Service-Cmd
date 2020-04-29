@@ -5,7 +5,17 @@ node {
   def imageTag = "192.168.99.100:5000/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
 
   checkout scm
+  stage ('Initialize') {
+                sh ('''
+                    echo "PATH = ${PATH}"
+                    echo "M2_HOME = ${M2_HOME}"
+                ''')
+           
+        }
 
+        stage 'Build mvn'
+                sh 'mvn -Dmaven.test.failure.ignore=true install' 
+        
   stage 'Build image'
   sh("docker build -t ${imageTag} .")
 
