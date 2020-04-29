@@ -54,7 +54,7 @@ node {
         //sh("sed -i.bak 's#LoadBalancer#ClusterIP#' ./k8s/services/frontend.yaml")
                
 
-        sh("sed -i.bak 's#192.168.99.100:5000/store-service-cmd#${imageTag}#' ./helm/usuario-service-cmd/values.yaml")
+        sh("sed -i.bak 's#192.168.99.100:5000/store-service-cmd#${imageTag}#' ./helm/store-service-cmd/values.yaml")
         //sh("kubectl --namespace=${env.BRANCH_NAME} apply -f yamls/services/")
     //withKubeConfig([credentialsId: 'jenkins-deployer', serverUrl: 'https://192.168.99.100:6443']) {
      //sh("kubectl version")
