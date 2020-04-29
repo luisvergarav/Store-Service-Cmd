@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: usuario-service-cmd-v1.0
+  name: store-service-cmd-v1.0
   labels:
-    app: usuario-service-cmd
+    app: store-service-cmd
     version: "1.0"
     environment: development
   namespace: {{ .Values.namespace }}
@@ -11,18 +11,18 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: usuario-service-cmd
+      app: store-service-cmd
       version: "1.0"
       environment: development
   template:
     metadata:
       labels:
-        app: usuario-service-cmd
+        app: store-service-cmd
         version: "1.0"
         environment: development
     spec:
       containers:
-        - name: "usuario-service-cmd-container"
+        - name: "store-service-cmd-container"
           image: {{ .Values.image.repository }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
@@ -35,7 +35,7 @@ spec:
               value: "development" 
           ports:
             - name: http
-              containerPort: 9999
+              containerPort: 9991
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

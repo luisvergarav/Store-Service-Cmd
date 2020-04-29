@@ -5,7 +5,7 @@
 replicaCount: 1
 namespace : neargrocery-development
 image:
-  repository: 192.168.99.100:5000/neargrocery/usuario-service-cmd
+  repository: 192.168.99.100:5000/neargrocery/store-service-cmd
   tag: 
   pullPolicy: IfNotPresent
 
@@ -35,7 +35,7 @@ securityContext: {}
 
 service:
   type: NodePort
-  port: 9999
+  port: 9991
 
 ingress:
   enabled: false
